@@ -1,0 +1,26 @@
+
+apiVersion: apps/v1 
+kind: Deployment 
+metadata: 
+  name: deployment-azurestorage-test 
+spec: 
+  selector: 
+    matchLabels: 
+      app: azuretest 
+  template: 
+    metadata: 
+      labels: 
+        app: azuretest 
+    spec: 
+      containers: 
+      - name: azuretest 
+        image: nginx:latest 
+        volumeMounts: 
+        - name: azurefileshare
+          mountPath: /myawesomefileshare 
+      volumes: 
+      - name: azurefileshare 
+        azureFile: 
+          secretName: filesharesecret 
+          shareName: faceimages 
+          readOnly: true 
